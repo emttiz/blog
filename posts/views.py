@@ -10,7 +10,11 @@ def main(request):
 
 
 def posts_view(request, **kwargs):
-    posts = Post.objects.all()
+    hashtag_id = request.GET.get('hashtag_id')
+    if hashtag_id:
+        posts = Post.objects.filter(hashtag=Hashtag.objects.get(id=hashtag_id))
+    else:
+        posts = Post.objects.all()
     data = {
         'posts': posts,
     }
